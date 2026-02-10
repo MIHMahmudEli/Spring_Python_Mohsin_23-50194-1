@@ -1,0 +1,2 @@
+Run PowerShell as Administrator, then:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
