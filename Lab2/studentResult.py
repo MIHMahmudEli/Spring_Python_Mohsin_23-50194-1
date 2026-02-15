@@ -12,8 +12,27 @@ def get_non_empty_input(prompt: str) -> str:
             return value
         else:   
             print("Input cannot be empty. Please try again.")
-            
-            
+
+#Function to input name and clean it
+def get_clean_name(prompt: str) -> str:
+    return get_non_empty_input(prompt).title().strip()
+
+#Finction to input integer and validate it
+def get_valid_integer(prompt: str, min_value: int | None = None, max_value: int | None = None) -> int:
+    while True:
+        value = input(prompt).strip()
+        try:
+            num = int(value)
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+            continue
+        if min_value is not None and num < min_value:
+            print(f"Input must be at least {min_value}. Please try again.")
+            continue
+        if max_value is not None and num > max_value:
+            print(f"Input must be at most {max_value}. Please try again.")
+            continue
+        return num
 
 # CLI menu printing function
 def menu()-> None:
@@ -29,51 +48,7 @@ def menu()-> None:
 #function to add student and compute result
 def add_student(students: list[dict]) -> None:
     sid = get_non_empty_input("Enter student ID: ")
-    name = get_non_empty_input("Enter student name: ")
-    
-    
-    #collecting marks for 5 subjects
-    marks = []
-    for i in range(1, 6):
-        while True:
-            try:
-                mark = float(input(f"Enter marks for subject {i} (0-100): ").strip())
-                if 0 <= mark <= 100:
-                    marks.append(mark)
-                    break
-                else:
-                    print("Marks should be between 0 and 100. Please try again.")
-            except ValueError:
-                print("Invalid input. Please enter a number.")
-    
-    #calculating total and average
-    total_marks = sum(marks)
-    average_marks = total_marks / len(marks)
-    
-    #determining grade based on average
-    if average_marks >= 90:
-        grade = 'A'
-    elif average_marks >= 80:
-        grade = 'B'
-    elif average_marks >= 70:
-        grade = 'C'
-    elif average_marks >= 60:
-        grade = 'D'
-    else:
-        grade = 'F'
-    
-    #storing student data in a dictionary
-    student_data = {
-        "name": name,
-        "id": student_id,
-        "marks": marks,
-        "total": total_marks,
-        "average": average_marks,
-        "grade": grade
-    }
-    
-    students.append(student_data)
-    print(f"Student {name} added successfully with grade {grade}.")
+    name = get_clean_name("Enter student name: ")
     
     
 def list_students():
